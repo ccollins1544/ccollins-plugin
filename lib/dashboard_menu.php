@@ -27,6 +27,11 @@ $c = new cuConfig();
 								'type'  => 'checkbox',
 							),
 							array(
+								'id' 		=> 'public_repo',
+								'label'	=> 'Public Repo',
+								'type'  => 'checkbox',
+							),
+							array(
 								'id' 		=> 'license_username',
 								'label'	=> 'Username',
 								'type'  => 'text',

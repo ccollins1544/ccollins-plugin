@@ -3,7 +3,7 @@
 Plugin Name: ccollins Updater
 Plugin URI: https://github.com/ccollins1544/ccollins-updater
 Description: Template for creating wordpress plugins that auto-update through github. Also secures the token, user, project name in your wordpress database.
-Version: 1.0.0
+Version: 1.0.1
 Author: Christopher Collins
 Author URI: https://ccollins.io
 License: GPL3
@@ -12,7 +12,7 @@ License URI:
 defined('ABSPATH') or die("Direct access not allowed");
 
 // Should be consistant with the above value
-if(!defined('CCOLLINS_UPDATER_VERSION')){ define('CCOLLINS_UPDATER_VERSION', '1.0.0');   }
+if(!defined('CCOLLINS_UPDATER_VERSION')){ define('CCOLLINS_UPDATER_VERSION', '1.0.1');   }
 if(!defined('CU_VERSION_KEY')){ define('CU_VERSION_KEY','ccollinsupdater_version'); }
 
 // add_option does nothing if option already exists.

@@ -21,6 +21,7 @@ class CCOLLINS_Updater {
   private $repository;
   private $authorize_token;
   private $github_response;
+  private $public_repo;
 
   public function __construct ( $file ) {
     $this->file = $file;
@@ -57,13 +58,18 @@ class CCOLLINS_Updater {
     }
 
     if( is_null( $this->authorize_token )){
-      $this->authorize_token = cuConfig::get('license_code', false, false);
+      $this->public_repo = cuConfig::get('public_repo');
+      if($this->public_repo === 1){
+        $this->authorize_token = cuConfig::get('license_code', false, false);
+      }else{
+        $this->authorize_token = null;
+      }
     }
 
     if ( is_null( $this->github_response ) ) { // Do we have a response?
       $request_uri = sprintf( 'https://api.github.com/repos/%s/%s/releases', $this->username, $this->repository ); // Build URI
       
-      if( $this->authorize_token ) { // Is there an access token?
+      if( $this->authorize_token && $this->public_repo === 0) { // Is there an access token?
         $request_uri = add_query_arg( 'access_token', $this->authorize_token, $request_uri ); // Append it
       }
       
@@ -72,11 +78,11 @@ class CCOLLINS_Updater {
         $response = current( $response ); // Get the first item
       }
 
-      if( $this->authorize_token ) { // Is there an access token?
+      if( $this->authorize_token && $this->public_repo === 0) { // Is there an access token?
         $response['zipball_url'] = add_query_arg( 'access_token', $this->authorize_token, $response['zipball_url'] ); // Update our zip url with token
       }
 
-      $this->github_response = $response; // Set it to our property  
+      $this->github_response = $response; // Set it to our property
     }
   }
 
@@ -114,6 +120,11 @@ class CCOLLINS_Updater {
     if( property_exists( $transient, 'checked') ) { // Check if transient has a checked property
       if( $checked = $transient->checked ) { // Did WordPress check for updates?
         $this->get_repository_info(); // Get the repo info
+
+        if(is_array($this->github_response) === false || (is_array($this->github_response) && array_key_exists('tag_name', $this->github_response) === false) ){
+          return; 
+        }
+
         $out_of_date = version_compare( $this->github_response['tag_name'], $checked[$this->basename], 'gt' ); // Check if we're out of date
         
         if( $out_of_date ) {

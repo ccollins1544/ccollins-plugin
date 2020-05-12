@@ -17,6 +17,7 @@ class cuConfig {
 		"checkboxes" => array(
 			"debugOn" => array('value' => self::DEBUG, 'autoload' => self::AUTOLOAD),
 			"deleteTablesOnDeact" => array('value' => false, 'autoload' => self::AUTOLOAD),
+			"public_repo" => array('value' => true, 'autoload' => self::AUTOLOAD),
 		),
 		// All exportable variable type options
 		"otherParams" => array(),
