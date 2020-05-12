@@ -5,7 +5,7 @@
 $c = new cuConfig(); 
 ?>
 <div class="wrap ccollinsupdater">
-	<?php $pageTitle = "Payout Dashboard"; include('pageTitle.php'); ?>
+	<?php $pageTitle = "Dashboard"; include('pageTitle.php'); ?>
 	<div class="cu-container-fluid">
 		<div class="cu-row">
 			<div id="cuRightRail" class="cu-hidden-xs cu-col-sm-push-9 cu-col-sm-3" >
